@@ -1,0 +1,24 @@
+/* SETUP  */
+/* @import 'setup/vars.css'; */
+@import 'setup/typography.css';
+
+/* BASE */
+@import 'basic/base.css';
+@import 'basic/helpers.css';
+@import 'basic/layout.css';
+@import 'basic/animations.css';
+@import 'basic/buttons.css';
+
+/* COMPONENTS */
+@import 'compomemts/header.css';
+@import 'compomemts/hero.css';
+@import 'compomemts/gallery.css';
+@import 'compomemts/editor.css';
+@import 'compomemts/canvas.css';
+@import 'compomemts/screen.css';
+@import 'compomemts/footer.css';
+@import 'compomemts/search.css';
+@import 'compomemts/alert.css';
+
+/* MEDIA */
+@import 'mq/mq.css';

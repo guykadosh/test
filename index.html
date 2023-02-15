@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- FONT-AWSOME -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/0d3f998bf1.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- SCRIPTS -->
+    <script defer src="js/services/storageService.js"></script>
+    <script defer src="js/services/shareService.js"></script>
+    <script defer src="js/services/utilService.js"></script>
+    <script defer src="js/services/keywordsService.js"></script>
+    <script defer src="js/services/imgsService.js"></script>
+    <script defer src="js/services/memeService.js"></script>
+    <script defer src="js/services/emojisService.js"></script>
+    <script defer src="js/mainController.js"></script>
+    <script defer src="js/memeController.js"></script>
+    <script defer src="js/galleryController.js"></script>
+    <script defer src="js/canvasController.js"></script>
+
+    <title>G-Memes</title>
+  </head>
+  <body onload="init()">
+    <div class="main-screen" onclick="toggleMenu()"></div>
+    <header class="header-container">
+      <!-- HERO SECTION - ON LOAD -->
+      <div class="hero">
+        <div class="logo-box">
+          <img src="images/logo-white.png" alt="logo" class="logo" />
+        </div>
+        <div class="text-box">
+          <h1 class="heading-primary">
+            <span class="heading-primary-main">G-Memes Generator</span>
+            <span class="heading-primary-sub"
+              >Make your friends & Co-workers laugh</span
+            >
+          </h1>
+          <a
+            href="#"
+            class="btn-hero btn-white btn-animated"
+            onclick="onLoadGallery()"
+            >Start Generate</a
+          >
+        </div>
+      </div>
+
+      <!-- HEADER -->
+      <div class="header flex space-between align-center">
+        <img
+          src="images/logo.png"
+          alt="logo"
+          class="logo-header"
+          onclick="onShowGallery()"
+        />
+
+        <nav class="main-nav">
+          <a href="#" onclick="onShowGallery()">Gallery</a>
+          <a href="#" onclick="onShowSavedMemes()">Memes</a>
+          <a href="#">About</a>
+          <div class="dot"></div>
+        </nav>
+
+        <button onclick="toggleMenu()" class="menu-toggle">☰</button>
+      </div>
+
+    </header>
+
+    <!-- MAIN -->
+    <main>
+      <!-- GALERRY -->
+      <section class="gallery main-layout">
+        <div class="gallery-options flex">
+          <div class="search">
+            <i class="icon fa-solid fa-magnifying-glass"></i>
+            <datalist id="keywords-list" class="keywords"></datalist>
+            <input
+              list="keywords-list"
+              class="input filter-txt-input"
+              type="text"
+              name="filter-txt"
+              placeholder="Start typing..."
+              oninput="onSetFilterText(this.value)"
+            />
+          </div>
+          <button class="btn-tool btn-random" onclick="onGenerateRandomMeme()">
+            <span class="tooltip">Random Meme</span>
+            <span> <i class="fa-solid fa-shuffle"></i> </span>
+          </button>
+        </div>
+
+        <div class="pop-keywords">Funny cute baby</div>
+        <!-- IMAGES  -->
+        <div class="gallery-imgs grid"></div>
+      </section>
+
+      <!-- SAVED MEMES PAGE -->
+      <section class="memes">
+        <div class="gallery-memes main-layout grid">No Saved Memes</div>
+      </section>
+
+      <!-- MEME EDITOR SECTION -->
+      <section class="editor-container main-layout flex justify-center">
+        <!-- CANVAS -->
+        <div>
+          <p class="tip">TIP: ■ to resize ● to rotate, use rotate last! 🙈</p>
+          <div class="canvas-container">
+            <canvas class="canvas" height="500" width="500"></canvas>
+            <div class="canvas-input"></div>
+          </div>
+        </div>
+
+        <!-- EDITOR -->
+        <div class="editor flex">
+          <input
+            type="text"
+            class="input text-line"
+            placeholder="Write Something Here..."
+            oninput="onSetTextLine(this.value)"
+          />
+
+          <div class="editor-tools grid">
+            <a
+              href="#"
+              class="btn-tool text-switch"
+              onclick="onSwitchTextLine()"
+              title="switch text line"
+            >
+              <span class="tooltip">Switch Text</span>
+              <span>
+                <i class="fa-solid fa-arrows-up-down"></i>
+              </span>
+            </a>
+
+            <a
+              href="#"
+              class="btn-tool text-switch"
+              onclick="onMoveLine(-15)"
+              title="Move Up"
+            >
+              <span class="tooltip">Move Up</span>
+              <span>
+                <i class="fa-solid fa-arrow-up"></i>
+              </span>
+            </a>
+
+            <a
+              href="#"
+              class="btn-tool text-switch"
+              onclick="onMoveLine(15)"
+              title="Move Down"
+            >
+              <span class="tooltip">Move Down</span>
+              <span>
+                <i class="fa-solid fa-arrow-down"></i>
+              </span>
+            </a>
+            <a
+              href="#"
+              class="btn-tool text-add"
+              onclick="onAddLine()"
+              title="Add Line"
+            >
+              <span class="tooltip">Add Text</span>
+              <span>
+                <i class="fa-solid fa-plus"></i>
+              </span>
+            </a>
+            <a
+              href="#"
+              class="btn-tool text-delete"
+              onclick="onRemoveLine()"
+              title="Remove Line"
+            >
+              <span class="tooltip">Remove Line</span>
+              <span>
+                <i class="fa-solid fa-trash-can"></i>
+              </span>
+            </a>
+            <a
+              href="#"
+              class="btn-tool text-increase"
+              onclick="onChangeFontSize(2)"
+            >
+              <span class="tooltip">Increase Size</span>
+              <span> A+ </span>
+            </a>
+            <a
+              href="#"
+              class="btn-tool text-decrease"
+              onclick="onChangeFontSize(-2)"
+            >
+              <span class="tooltip">Decrease Size</span>
+              <span> A- </span>
+            </a>
+            <a
+              href="#"
+              class="btn-tool"
+              title="Align Left"
+              onclick="onSetTextAlign('start')"
+            >
+              <span class="tooltip">Align Left</span>
+              <span>
+                <i class="fa-solid fa-align-left"></i>
+              </span>
+            </a>
+            <a
+              href="#"
+              class="btn-tool"
+              title="Align Center"
+              onclick="onSetTextAlign('center')"
+            >
+              <span class="tooltip">Align Center</span>
+              <span>
+                <i class="fa-solid fa-align-center"></i>
+              </span>
+            </a>
+            <a
+              href="#"
+              class="btn-tool"
+              title="Align Right"
+              onclick="onSetTextAlign('end')"
+            >
+              <span class="tooltip">Align Right</span>
+              <span>
+                <i class="fa-solid fa-align-right"></i>
+              </span>
+            </a>
+            <select class="font-select" onchange="onSetFontFamily(this.value)">
+              <option value="Impact">Choose Font</option>
+              <option value="Impact">Impact</option>
+              <option value="Arial">Ariel</option>
+              <option value="Rubik-bold">Rubik</option>
+              <option value="Fascinate">Fascinate</option>
+              <option value="RussoOne">RussoOne</option>
+            </select>
+            <span class="btn-tool">
+              <span class="tooltip">Text Color</span>
+              <span>
+                <input
+                  type="color"
+                  name="fill-color"
+                  value="#ffffff"
+                  class="color-picker btn-tool"
+                  oninput="onChangeFillColor(this.value)"
+                />
+              </span>
+            </span>
+
+            <span class="btn-tool">
+              <span class="tooltip">Stroke Color</span>
+              <span>
+                <input
+                  type="color"
+                  name="stroke-color"
+                  class="color-picker btn-tool"
+                  oninput="onChangeStrokeColor(this.value)"
+                />
+              </span>
+            </span>
+          </div>
+
+          <!-- EMOJIS WILL RENDER HERE -->
+          <div class="emoji-selector"></div>
+
+          <!-- SHARE/DOWNLOAD/UPLOAD/SAVE BTNS -->
+          <div class="share-btns">
+            <button class="btn-download btn-share">
+              <!-- <a href="#" onclick="downloadImg(this)" download="my-img.jpg"> -->
+                <span class="label">Download</span>
+                <span class="icon">
+                  <i class="fa-solid fa-download"></i>
+                </span>
+              </a>
+            </button>
+            <button class="btn-share" onclick="uploadImg()">
+              <span class="label">Upload</span>
+              <span class="icon">
+                <i class="fa-solid fa-upload"></i>
+              </span>
+            </button>
+            <button class="btn-share share-container">
+              <span class="label" onclick="alert('You need to upload first')"
+                >Share</span
+              >
+              <span class="icon">
+                <i class="fa-solid fa-share-nodes"></i>
+              </span>
+            </button>
+            <button class="btn-share" onclick="onSaveMeme()">
+              <span class="label">Save</span>
+              <span class="icon">
+                <i class="fa-solid fa-floppy-disk"></i>
+              </span>
+            </button>
+          </div>
+          <div><p class="user-msg"></p></div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="footer-logo">
+        <img src="images/logo-colored.png" alt="logo" />
+      </div>
+      <div class="about"></div>
+      <ul class="footer-social flex align-center justify-center clean-list">
+        <li class="fb-link">
+            <a href="https://www.facebook.com"><i class="fa-brands fa-facebook-f"></i></a>
+        </li>
+        <li class="twitter-link">
+            <a href="https://www.twitter.com"><i class="fa-brands fa-twitter"></i></a>
+        </li>
+        <li class="be-link">
+            <a href="#"><i class="fa-brands fa-behance"></i></a>
+        </li>
+        <li class="drib-link">
+            <a href="#"><i class="fa-brands fa-dribbble"></i></a>
+        </li>
+    </ul>
+      <p class="footer-text">
+        © Coffeerights - Guy Kadosh - Sprint 2 - Coding Academy
+      </p>
+      <div class="social"></div>
+    </footer>
+
+    <div class="alert"></div>
+  </body>
+</html>

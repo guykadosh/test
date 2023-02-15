@@ -1,0 +1,64 @@
+.gallery {
+  display: none;
+  flex-direction: column;
+}
+
+.memes {
+  display: none;
+}
+
+.gallery-options {
+  margin-bottom: 1.25rem;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.5rem;
+  background-color: #66d9e8d3;
+  border-radius: 12px;
+}
+
+.gallery-imgs,
+.gallery-memes {
+  grid-template-columns: repeat(auto-fill, minmax(90px, 150px));
+  gap: 0.9rem;
+  width: 100%;
+
+  justify-content: center;
+}
+
+.gallery-img {
+  cursor: pointer;
+}
+
+.gallery-img img,
+.gallery-memes img {
+  width: 100%;
+  border-radius: 0.4rem;
+}
+
+.gallery-img img:hover,
+.gallery-memes img:hover,
+.gallery .file-input:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 3px 7px 1px rgb(0 0 0 / 20%);
+  border-radius: 0.4rem;
+}
+
+.gallery .file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.gallery .file-input {
+  color: transparent;
+  display: flex;
+  width: 100%;
+  background-color: #0c8599;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.gallery .file-input::before {
+  content: '+';
+  color: #fff;
+  text-align: center;
+  font-size: 7rem;
+}
